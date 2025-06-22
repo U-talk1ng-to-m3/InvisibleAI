@@ -1,0 +1,160 @@
+//Java test 1
+
+import java.util.*;
+
+class Account {
+    private String accountNumber;
+    private String accountHolderName;
+    private double balance;
+
+    public Account(String accountNumber, String accountHolderName, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.accountHolderName = accountHolderName;
+        this.balance = initialBalance;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited Rs." + amount);
+        } else {
+            System.out.println("Invalid deposit amount");
+        }
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount > 0 && balance >= amount) {
+            balance -= amount;
+            System.out.println("Withdrawn Rs." + amount);
+            return true;
+        } else {
+            System.out.println("Invalid amount or insufficient balance");
+            return false;
+        }
+    }
+
+    public void checkBalance() {
+        System.out.println("Current Balance: Rs." + balance);
+    }
+}
+
+class ATM {
+    private Map<String, Account> accounts = new HashMap<>();
+
+    public void addAccount(Account account) {
+        accounts.put(account.getAccountNumber(), account);
+    }
+
+    public Account getAccount(String accountNumber) {
+        return accounts.get(accountNumber);
+    }
+}
+
+public class ATMMachine {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ATM atm = new ATM();
+
+        atm.addAccount(new Account("12345", "Alice", 5000));
+        atm.addAccount(new Account("67890", "Bob", 3000));
+
+        while (true) {
+            System.out.println("\nWelcome to the ATM");
+            System.out.print("Enter your account number (or 'exit' to quit): ");
+            String accNum = scanner.nextLine();
+
+            if (accNum.equalsIgnoreCase("exit")) {
+                System.out.println("Thank you! Exiting...");
+                break;
+            }
+
+            Account account = atm.getAccount(accNum);
+            if (account == null) {
+                System.out.println("Account not found. Please try again.");
+                continue;
+            }
+
+            System.out.println("Welcome, " + account.getAccountHolderName() + "!");
+
+            while (true) {
+                System.out.println("\nSelect an option:");
+                System.out.println("1. Check Balance");
+                System.out.println("2. Deposit");
+                System.out.println("3. Withdraw");
+                System.out.println("4. Exit to Main Menu");
+                System.out.print("Your choice: ");
+                String choice = scanner.nextLine();
+
+                switch (choice) {
+                    case "1":
+                        account.checkBalance();
+                        break;
+                    case "2":
+                        System.out.print("Enter amount to deposit: ");
+                        double depositAmount = Double.parseDouble(scanner.nextLine());
+                        account.deposit(depositAmount);
+                        break;
+                    case "3":
+                        System.out.print("Enter amount to withdraw: ");
+                        double withdrawAmount = Double.parseDouble(scanner.nextLine());
+                        account.withdraw(withdrawAmount);
+                        break;
+                    case "4":
+                        System.out.println("Logging out...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice, try again.");
+                }
+
+                if (choice.equals("4")) {
+                    break;
+                }
+            }
+
+}
+//Java test 2
+public class LongestPalindromicSubstring {
+    public static String longestPalindrome(String s) {
+        if (s == null || s.length() < 1) return "";
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    private static int expandAroundCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
+
+    public static void main(String[] args) {
+        String input = "babad";
+        System.out.println("Longest palindrome substring: " + longestPalindrome(input));
+    }
+}
+
+        scanner.close();
+    }
+}
