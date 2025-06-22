@@ -1,0 +1,38 @@
+///Python test 1
+
+import re
+
+def is_valid_string(s):
+    if len(s) < 6:
+        return False
+    digit_positions = [match.start() for match in re.finditer(r'\d', s)]
+    total_digits = len(digit_positions)
+    if total_digits < 2 or total_digits > 3:
+        return False
+    for i in range(len(digit_positions) - 1):
+        if digit_positions[i+1] - digit_positions[i] == 1:
+            return False
+    for i in range(len(digit_positions) - 1):
+        start = digit_positions[i]
+        end = digit_positions[i+1]
+        between_chars = s[start+1:end]
+        if all(c.isdigit() for c in between_chars):
+            return False
+    return True
+
+///python test 2
+
+import re
+from collections import Counter
+
+def word_frequencies(text):
+    text = text.lower()
+    words = re.findall(r'\b\w+\b', text)
+    freq = Counter(words)
+    sorted_freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+    print("Word Frequencies:")
+    for word, count in sorted_freq:
+        print(f"{word}: {count}")
+
+text = "Hello world! This is a test. Hello, this test is only a test."
+word_frequencies(text)
