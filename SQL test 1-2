@@ -1,0 +1,36 @@
+//SQL test 1
+//CSV
+first_name,last_name,company,country,subscription_start_date
+Xavier,Smith,Tech Innovators,Latvia,2023-01-15
+Yvonne,Johnson,Health Corp,USA,2024-03-20
+Xander,Brown,Creative Solutions,Latvia,2022-11-05
+Xenia,Davis,Global Markets,Latvia,2024-05-10
+Alice,White,Finance Inc,Latvia,2024-01-01
+//SQL Query
+SELECT company
+FROM customers
+WHERE country = 'Latvia'
+  AND first_name LIKE 'X%'
+  AND subscription_start_date < DATE('now');
+
+//Sql test 2
+CREATE TABLE books (
+    title TEXT NOT NULL,
+    author TEXT NOT NULL,
+    isbn TEXT NOT NULL UNIQUE,
+    genre TEXT,
+    publication_year INTEGER,
+    price REAL,
+    stock_quantity INTEGER
+);
+
+INSERT INTO books (title, author, isbn, genre, publication_year, price, stock_quantity)
+VALUES (
+    'The Hitchhiker''s Guide to the Galaxy',
+    'Douglas Adams',
+    '9780345391803',
+    'Science Fiction',
+    1979,
+    12.99,
+    5
+);
